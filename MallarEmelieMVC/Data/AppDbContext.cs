@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using MallarEmelieMVC.Data.Model;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace MallarEmelieMVC.Data;
@@ -9,4 +10,7 @@ public class AppDbContext : DbContext
         : base(options)
     {
     }
+
+    public DbSet<Template> Templates { get; set; }
+    public DbSet<Category> Categories { get; set; }
 }

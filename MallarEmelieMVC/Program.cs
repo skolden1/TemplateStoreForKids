@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MallarEmelieMVC.Data;
 using MallarEmelieMVC.Areas.Identity.Data;
 using MallarEmelieMVC.Areas.Identity.Models;
+using MallarEmelieMVC.Data.Model;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +39,73 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+//seed för kategorier
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    if (!dbContext.Categories.Any())
+    {
+        dbContext.Categories.AddRange(
+            new Category { CategoryName = "Matematik" },
+            new Category { CategoryName = "Språk" },
+            new Category { CategoryName = "Naturvetenskap" },
+            new Category { CategoryName = "Konst" },
+            new Category { CategoryName = "TAKK/AKK Kakor" }
+        );
+
+        dbContext.SaveChanges();
+    }
+}
+
+
+
+// seed admin user och roll
+using (var scope = app.Services.CreateScope())
+{
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUserTable>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    string adminEmail = "skolden123@hotmail.com";
+    string adminPassword = "Admin123!"; 
+
+    // om admin roll ej finns skapa den
+    if (!await roleManager.RoleExistsAsync("Admin"))
+    {
+        await roleManager.CreateAsync(new IdentityRole("Admin"));
+    }
+
+    
+    var adminUser = await userManager.FindByEmailAsync(adminEmail);
+
+    if (adminUser == null)
+    {
+        var newUser = new IdentityUserTable
+        {
+            UserName = adminEmail,
+            Email = adminEmail,
+            EmailConfirmed = true,
+            FirstName = "Admin",
+            LastName = "Admin",
+            DateJoined = DateTime.Now
+        };
+
+        var createUserResult = await userManager.CreateAsync(newUser, adminPassword);
+        if (!createUserResult.Succeeded)
+        {
+            throw new Exception("Det gick inte att skapa en admin användare!");
+        }
+        adminUser = newUser;
+    }
+
+    if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
+    {
+        await userManager.AddToRoleAsync(adminUser, "Admin");
+    }
+}
+
+
 
 app.UseHttpsRedirection();
 app.UseRouting();
