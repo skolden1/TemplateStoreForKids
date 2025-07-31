@@ -1,0 +1,54 @@
+﻿@model MallarEmelieMVC.Data.Model.Template
+
+@*
+*@
+@{
+	ViewData["Title"] = "Redigera mall";
+}
+
+<h1 class="text-center my-5">Redigera mall</h1>
+
+<form class="text-form" method="post" asp-controller="Admin" asp-action="EditTemplate" enctype="multipart/form-data">
+    
+        <input type="hidden" asp-for="TemplateId" />
+        <div class="mb-3">
+        <div class="mb-3">
+            <label>Nuvarande bild:</label><br />
+            <img src="@Model.ImageUrl" alt="Nuvarande bild" class="img-thumbnail mb-2"/>
+        </div>
+            <label for="ImageUpload" class="form-label">Ändra bild</label>
+            <input type="file" class="form-control" name="ImageUpload" />
+        </div>
+        <div class="card-body">
+            <div class="mb-3">
+                <label for="Title">Ändra titel</label>
+                <input asp-for="Title" class="form-control" />
+            </div>
+
+        <div class="mb-3">
+            <label for="Description">Ändra beskrivning</label>
+            <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="CategoryId">Ändra kategori</label>
+            <select asp-for="CategoryId" class="form-select">
+                <option value="0" disabled>-- Välj kategori --</option>
+                <option value="1">Matematik</option>
+                <option value="2">Språk</option>
+                <option value="3">Naturvetenskap</option>
+                <option value="4">Konst</option>
+                <option value="5">TAKK/AKK Kakor</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="Price">Ändra pris</label>
+            <input type="number" asp-for="Price" class="form-control" />
+        </div>
+
+            
+       
+            <button type="submit" asp-action="EditTemplate" asp-route-id="@Model.TemplateId" class="btn btn-primary">Spara ändringar</button>
+            <a asp-controller="Template" asp-action="ViewTemplate" class="btn btn-secondary ms-2">Avbryt</a>
+        </div>
+    
+</form>

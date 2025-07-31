@@ -16,7 +16,7 @@
     <div class="alert alert-danger">@TempData["Error"]</div>
 }
 
-<form asp-action="CreateTemplate" method="post" enctype="multipart/form-data">
+<form class="text-form" asp-action="CreateTemplate" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     <div class="mb-3">
@@ -45,7 +45,7 @@
     <div class="mb-3">
         <label for="CategoryId">Kategori</label>
         <select asp-for="CategoryId" class="form-select">
-            <option value="">-- Välj kategori --</option>
+            <option value="0">-- Välj kategori --</option>
             <option value="1">Matematik</option>
             <option value="2">Språk</option>
             <option value="3">Naturvetenskap</option>

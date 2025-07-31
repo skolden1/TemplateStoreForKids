@@ -1,0 +1,31 @@
+﻿<link rel="stylesheet" href="~/css/ViewTemplate.css" />
+@model MallarEmelieMVC.Data.Model.Template;
+@*
+*@
+@{
+}
+
+<div class="container my-5">
+    <h2 class="text-center mb-5">Produktinformation</h2>
+
+    <div class="row border rounded shadow p-4 align-items-stretch p-5">
+        <div class="col-md-6 d-flex">
+            <img src="@Model.ImageUrl" class="img-fluid rounded align-self-stretch" alt="@Model.Title" />
+        </div>
+        <div class="col-md-6 d-flex flex-column justify-content-between">
+            <div class="product-info">
+                <h3>@Model.Title</h3>
+                <p><strong>Beskrivning:</strong><br /> @Model.Description</p>
+                <p><strong>Kategori:</strong> @Model.Category?.CategoryName</p>
+                <p><strong>Pris:</strong> @Model.Price.ToString("C")</p>
+                <p class="text-success fw-bold">Finns i lager</p>
+            </div>
+            <div>
+                <a asp-action="ViewTemplateById" asp-route-id="@Model.TemplateId" class="btn btn-success mt-3 w-100">
+                    Lägg till i kundvagn
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+

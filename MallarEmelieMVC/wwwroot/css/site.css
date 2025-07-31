@@ -2,6 +2,57 @@ html {
   font-size: 14px;
 }
 
+/*view template*/
+.img-fixed {
+    height: 350px;
+    object-fit: cover;
+    width: 100%;
+}
+
+
+.img-fluid {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.available {
+    color: green;
+    font-weight: bold;
+}
+
+
+/*editview + createview*/
+
+.img-thumbnail {
+    max-height: 200px;
+}
+
+.text-form label {
+    font-size: 17px;
+    font-weight: bold;
+}
+/*productinfo*/
+.product-info p {
+    font-size: 20px;
+    margin-top: 25px
+}
+
+
+
+@media (max-width: 768px) {
+    .product-info h3 {
+        font-size: 24px;
+        margin-top: 10px;
+    }
+}
+
+
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;

@@ -15,8 +15,9 @@ namespace MallarEmelieMVC.Data.Model
         [Required]
         public decimal Price { get; set; }
 
-        [Required]
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
+
+        public int Quantity { get; set; }
 
         public int CategoryId { get; set; }   // fk
         public Category? Category { get; set; }  // nav prop

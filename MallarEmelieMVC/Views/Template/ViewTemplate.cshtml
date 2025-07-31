@@ -1,0 +1,52 @@
+﻿<link rel="stylesheet" href="~/css/ViewTemplate.css" />
+
+@using MallarEmelieMVC.Data.Model
+@model List<Template> 
+@*
+*@
+@{
+    ViewData["Title"] = "Alla mallar";
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+@if (!Model.Any())
+{
+    <p>Det finns inga mallar att visa just nu.</p>
+}
+else
+{
+    <form method="get" class="d-flex mb-4" role="search">
+        <input class="form-control me-2" type="search" placeholder="Sök efter namn / kategori" aria-label="Sök" name="searchWord" />
+        <button class="btn btn-outline-primary" type="submit">Sök</button>
+    </form>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+        @foreach (var t in Model)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <img src="@t.ImageUrl" class="card-img-top img-fixed" alt="@t.Title" />
+                    <div class="card-body">
+                        <h5 class="card-title">@t.Title</h5>
+                        <p><strong>Kategori:</strong> @t.Category?.CategoryName</p>
+                        <p><strong>Pris:</strong> @t.Price.ToString("C")</p>
+                        <p class="available"><strong>Finns i lager</strong></p>
+                        <a asp-action="ViewTemplateById" asp-route-id="@t.TemplateId" class="btn btn-primary">Visa mer</a>
+
+                        @*  om man är admin visas detta med *@
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-controller="Admin" asp-action="EditTemplate" asp-route-id="@t.TemplateId" class="btn btn-success">Redigera</a>
+                            <a asp-action="RemoveTemplate" asp-route-id="@t.TemplateId" class="btn btn-danger">Ta bort</a>
+                        }
+                        
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
