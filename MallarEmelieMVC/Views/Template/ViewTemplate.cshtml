@@ -1,5 +1,4 @@
-﻿<link rel="stylesheet" href="~/css/ViewTemplate.css" />
-
+﻿
 @using MallarEmelieMVC.Data.Model
 @model List<Template> 
 @*
@@ -41,7 +40,7 @@ else
                         @if (User.IsInRole("Admin"))
                         {
                             <a asp-controller="Admin" asp-action="EditTemplate" asp-route-id="@t.TemplateId" class="btn btn-success">Redigera</a>
-                            <a asp-action="RemoveTemplate" asp-route-id="@t.TemplateId" class="btn btn-danger">Ta bort</a>
+                            <a asp-controller="Admin" asp-action="RemoveTemplate" asp-route-id="@t.TemplateId" class="btn btn-danger">Ta bort</a>
                         }
                         
                     </div>

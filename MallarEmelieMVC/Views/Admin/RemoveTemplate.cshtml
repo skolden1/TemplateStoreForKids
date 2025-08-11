@@ -1,0 +1,25 @@
+﻿@model MallarEmelieMVC.Data.Model.Template
+
+@{
+    ViewData["Title"] = "Bekräfta borttagning";
+}
+
+<h2 class="text-danger text-center my-5">Är du säker på att du vill ta bort denna mall?</h2>
+
+<form method="post" asp-controller="Admin" asp-action="ConfirmRemoveTemplate">
+    <input type="hidden" name="id" value="@Model.TemplateId" />
+    <div class="card mx-auto" style="max-width: 400px;">
+        <img src="@Model.ImageUrl" class="card-img-top img-smaller" alt="@Model.Title" />
+        <div class="card-body text-center">
+            <h5 class="card-title">@Model.Title</h5>
+            <p><strong>Kategori:</strong> @Model.Category?.CategoryName</p>
+            <p><strong>Pris:</strong> @Model.Price.ToString("C")</p>
+            <p class="available"><strong>Finns i lager</strong></p>
+
+            <div class="d-flex justify-content-center gap-2 mt-3">
+                <a asp-action="ViewTemplate" asp-controller="Template" class="btn btn-primary">Tillbaka</a>
+                <button type="submit" class="btn btn-danger">Bekräfta borttagning</button>
+            </div>
+        </div>
+    </div>
+</form>

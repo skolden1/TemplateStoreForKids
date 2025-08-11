@@ -116,5 +116,35 @@ namespace MallarEmelieMVC.Controllers
             return RedirectToAction("ViewTemplate", "Template");
            
         }
+
+        [HttpGet]
+        public async Task<IActionResult> RemoveTemplate(int id)
+        {
+            var temp = await _context.Templates.Include(t => t.Category).FirstOrDefaultAsync(t => t.TemplateId == id);
+            if(temp == null)
+            {
+                TempData["Error"] = "Ingen mall hittades med det ID:t.";
+                return RedirectToAction("ViewTemplate", "Template");
+            }
+
+            return View(temp);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ConfirmRemoveTemplate(int id)
+        {
+            var deleteTemp = await _context.Templates.FirstOrDefaultAsync(t => t.TemplateId == id);
+            if(deleteTemp == null)
+            {
+                TempData["Error"] = "Ingen mall hittades med det Id:t";
+                return RedirectToAction("ViewTemplate", "Template");
+            }
+
+            _context.Templates.Remove(deleteTemp);
+            await _context.SaveChangesAsync();
+            TempData["Success"] = "Mallen raderades!";
+            return RedirectToAction("ViewTemplate", "Template");
+        }
     }
 }

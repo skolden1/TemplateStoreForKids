@@ -42,7 +42,12 @@ html {
     margin-top: 25px
 }
 
-
+/*confirmdelete*/
+.img-smaller {
+    max-height: 250px;
+    width: 100%;
+    object-fit: contain;
+}
 
 @media (max-width: 768px) {
     .product-info h3 {
