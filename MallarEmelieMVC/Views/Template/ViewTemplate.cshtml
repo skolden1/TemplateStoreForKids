@@ -34,13 +34,23 @@ else
                         <p><strong>Kategori:</strong> @t.Category?.CategoryName</p>
                         <p><strong>Pris:</strong> @t.Price.ToString("C")</p>
                         <p class="available"><strong>Finns i lager</strong></p>
-                        <a asp-action="ViewTemplateById" asp-route-id="@t.TemplateId" class="btn btn-primary">Visa mer</a>
 
+                        <div class="d-flex gap-4">
+                            <a asp-action="ViewTemplateById" asp-route-id="@t.TemplateId" class="btn btn-primary">Visa mer</a>
+                            <form asp-action="AddToCart" method="post">
+                                <input type="hidden" name="templateId" value="@t.TemplateId" />
+                                <button type="submit" class="btn btn-success">
+                                    Lägg till i kundvagn
+                                </button>
+                            </form>
+                        </div>
                         @*  om man är admin visas detta med *@
                         @if (User.IsInRole("Admin"))
                         {
-                            <a asp-controller="Admin" asp-action="EditTemplate" asp-route-id="@t.TemplateId" class="btn btn-success">Redigera</a>
-                            <a asp-controller="Admin" asp-action="RemoveTemplate" asp-route-id="@t.TemplateId" class="btn btn-danger">Ta bort</a>
+                            <div class="d-flex my-2 gap-4">
+                                <a asp-controller="Admin" asp-action="EditTemplate" asp-route-id="@t.TemplateId" class="btn btn-success">Redigera</a>
+                                <a asp-controller="Admin" asp-action="RemoveTemplate" asp-route-id="@t.TemplateId" class="btn btn-danger">Ta bort</a>
+                            </div>
                         }
                         
                     </div>

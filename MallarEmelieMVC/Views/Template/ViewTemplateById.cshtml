@@ -8,7 +8,7 @@
 <div class="container my-5">
     <h2 class="text-center mb-5">Produktinformation</h2>
 
-    <div class="row border rounded shadow p-4 align-items-stretch p-5">
+    <div class="row border rounded shadow p-4 align-items-stretch p-4">
         <div class="col-md-6 d-flex">
             <img src="@Model.ImageUrl" class="img-fluid rounded align-self-stretch" alt="@Model.Title" />
         </div>
@@ -20,9 +20,16 @@
                 <p><strong>Pris:</strong> @Model.Price.ToString("C")</p>
                 <p class="text-success fw-bold">Finns i lager</p>
             </div>
-            <div>
-                <a asp-action="ViewTemplateById" asp-route-id="@Model.TemplateId" class="btn btn-success mt-3 w-100">
-                    Lägg till i kundvagn
+            <div class="d-flex gap-3">
+                <form asp-action="AddToCart" method="post" class="mt-3 w-100">
+                    <input type="hidden" name="templateId" value="@Model.TemplateId" />
+                    <button type="submit" class="btn btn-success w-100">
+                        Lägg till i kundvagn
+                    </button>
+                </form>
+
+                <a asp-action="ViewTemplate" class="btn btn-outline-primary mt-3 w-100">
+                    Tillbaka
                 </a>
             </div>
         </div>
