@@ -6,6 +6,8 @@
     <title>@ViewData["Title"] - MallarEmelieMVC</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MallarEmelieMVC.styles.css" asp-append-version="true" />
 </head>
@@ -39,6 +41,15 @@
                         }
                         
                     </ul>
+
+                    <!-- CartIcon -->
+                    <a asp-area="" asp-controller="Cart" asp-action="ViewCart" class="position-relative me-3 text-dark cart-icon-link">
+                        
+                        <i class="bi bi-cart cart-icon"></i>
+                        
+                    </a>
+
+                    @* Identity prof pic login/logout etc *@
                     <partial name="_LoginPartial" />
                 </div>
             </div>

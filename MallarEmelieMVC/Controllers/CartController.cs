@@ -18,11 +18,28 @@ namespace MallarEmelieMVC.Controllers
         }
 
 
-        //[HttpGet]
-        //public async Task<IActionResult> AddToCart()
-        //{
-        //    var user 
-        //}
+        [HttpGet]
+        public async Task<IActionResult> ViewCart()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                TempData["Error"] = "Du måste vara inloggad för att se din kundvagn";
+                return RedirectToPage("/Account/Login", new { area = "Identity" });
+            }
+            var userId = user.Id;
+
+            var cartList = await _context.CartItems.Include(c => c.Template).Where(u => u.UserId == userId).ToListAsync();
+
+            if(!cartList.Any())
+            {
+                TempData["Info"] = "Din kundvagn är tom.";
+                return View(new List<CartItem>()); 
+            }
+
+            return View(cartList);
+        }
 
 
         [HttpPost]
@@ -32,7 +49,8 @@ namespace MallarEmelieMVC.Controllers
 
             if(user == null)
             {
-                return RedirectToAction("Login", "Account");
+                TempData["Error"] = "Du måste vara inloggad för att lägga till i kundvagnen";
+                return RedirectToPage("/Account/Login", new { area = "Identity" });
             }
 
             var userId = user.Id;
@@ -56,8 +74,30 @@ namespace MallarEmelieMVC.Controllers
             }
 
             await _context.SaveChangesAsync();
+            TempData["Success"] = "Produkten lades till i kundvagnen!";
 
-            return RedirectToAction("Index", "Cart");
+            return RedirectToAction("ViewTemplate", "Template");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromCart(int cartItemById)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                TempData["Error"] = "Du måste logga in för att ta bort från kundvagnen";
+                return RedirectToPage("/Account/Login", new { area = "Identity" });
+            }
+
+            var cartItem = await _context.CartItems.FirstOrDefaultAsync(i => i.CartItemId == cartItemById && i.UserId == user.Id);
+            if(cartItem != null)
+            {
+                _context.Remove(cartItem);
+                await _context.SaveChangesAsync();
+                TempData["Success"] = "Produkten har tagits bort från kundvagnen";
+            }
+
+            return RedirectToAction("ViewCart");
         }
     }
 }

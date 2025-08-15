@@ -1,0 +1,87 @@
+﻿@using MallarEmelieMVC.Data.Model
+@model List<CartItem>
+
+@{
+    ViewData["Title"] = "Din kundvagn";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
+
+@if (TempData["Info"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Info"]
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+<div class="container my-5">
+    <h1 class="text-center mb-4">Din kundvagn</h1>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <div class="row fw-bold mb-3">
+                <div class="col-2 text-center">Bild</div>
+                <div class="col-4">Produkt</div>
+                <div class="col-2 text-center">Antal</div>
+                <div class="col-2 text-center">Pris</div>
+                <div class="col-2 text-center">Ta bort</div>
+            </div>
+
+            <hr />
+
+            @foreach (var item in Model)
+            {
+                <div class="row align-items-center mb-2">
+                    <div class="col-2 text-center">
+                        <img src="@item.Template.ImageUrl" class="img-fluid rounded" alt="@item.Template.Title">
+                    </div>
+                    <div class="col-4">
+                        <p class="mb-1">@item.Template.Title</p>
+                        <small class="text-muted">@item.Template.Description</small>
+                    </div>
+                    <div class="col-2 text-center">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <button class="btn btn-outline-secondary btn-sm me-2">-</button>
+                            <span>@item.Quantity</span>
+                            <button class="btn btn-outline-secondary btn-sm ms-2">+</button>
+                        </div>
+                    </div>
+                    <div class="col-2 text-center">
+                        @((@item.Template.Price * @item.Quantity).ToString("C"))
+                    </div>
+                    <div class="col-2 text-center">
+                        <form asp-action="RemoveFromCart" asp-controller="Cart" asp-route-id="@item." method="post">
+                           <input type="hidden" name="cartItemById" value="@item.CartItemId" />
+                            <button type="submit" class="btn btn-danger btn-sm">Ta bort</button>
+                        </form>
+                    </div>
+                </div>
+            }
+
+            <hr />
+
+            
+            <div class="d-flex justify-content-end">
+                <h5>Totalt: @Model.Sum(i => i.Quantity * i.Template.Price) kr</h5>
+            </div>
+
+            <div class="d-flex justify-content-end mt-3">
+                <button class="btn btn-primary">Gå till kassan</button>
+            </div>
+
+        </div>
+    </div>
+</div>

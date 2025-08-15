@@ -7,6 +7,13 @@
     ViewData["Title"] = "Alla mallar";
 }
 
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
+
 @if (TempData["Error"] != null)
 {
     <div class="alert alert-danger">@TempData["Error"]</div>
@@ -28,7 +35,7 @@ else
         {
             <div class="col">
                 <div class="card h-100">
-                    <img src="@t.ImageUrl" class="card-img-top img-fixed" alt="@t.Title" />
+                    <img src="@t.ImageUrl" class="card-img-top " alt="@t.Title" />
                     <div class="card-body">
                         <h5 class="card-title">@t.Title</h5>
                         <p><strong>Kategori:</strong> @t.Category?.CategoryName</p>
@@ -37,7 +44,7 @@ else
 
                         <div class="d-flex gap-4">
                             <a asp-action="ViewTemplateById" asp-route-id="@t.TemplateId" class="btn btn-primary">Visa mer</a>
-                            <form asp-action="AddToCart" method="post">
+                            <form asp-action="AddToCart" asp-controller="Cart" method="post">
                                 <input type="hidden" name="templateId" value="@t.TemplateId" />
                                 <button type="submit" class="btn btn-success">
                                     Lägg till i kundvagn
