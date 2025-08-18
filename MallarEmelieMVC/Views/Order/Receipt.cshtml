@@ -1,0 +1,29 @@
+﻿@model MallarEmelieMVC.Data.Model.Order
+@*
+*@
+@{
+}
+<h1 class="text-center my-5">Ditt kvitto</h1>
+
+<div class="order-card">
+    <p class="thank-you">Tack för din beställning!</p>
+
+    <p><strong>Ordernummer:</strong> @Model.OrderId</p>
+    <p><strong>Totalt belopp:</strong> @Model.Items.Sum(i => i.Price * i.Quantity) kr</p>
+
+    <p>
+        Din order är nu registrerad och väntar på betalning.
+        Vänligen swisha beloppet <strong>@Model.Items.Sum(i => i.Price * i.Quantity) kr</strong>
+        till <strong>073-5266141</strong> och ange <strong>ordernummer @Model.OrderId</strong> som swish kommentar.
+    </p>
+
+    <h4>Beställda artiklar:</h4>
+    <ul>
+        @foreach (var item in Model.Items)
+        {
+            <li>@item.Quantity x @item.Template.Title - @item.Price kr/st</li>
+        }
+    </ul>
+
+    <p>När betalningen är mottagen kommer vi att behandla din order och skicka en bekräftelse.</p>
+</div>

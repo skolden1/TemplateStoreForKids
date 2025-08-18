@@ -7,6 +7,11 @@
         public DateTime OrderDate { get; set; }
         public string PaymentComment { get; set; } 
         public List<OrderItem> Items { get; set; } = new List<OrderItem>();
-        public string Status { get; set; }  
+        public string Status { get; set; }
+
+        public string MobileNr { get; set; }
+        public string StreetAddress { get; set; }
+        public string PostalCode { get; set; }
+        public string City { get; set; }
     }
 }

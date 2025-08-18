@@ -1,0 +1,17 @@
+﻿@using MallarEmelieMVC.Data.Model
+@model List<Order>
+
+@foreach (var order in Model)
+{
+    <h3>Order #@order.OrderId - @order.OrderDate.ToShortDateString()</h3>
+    <p>Status: @order.Status</p>
+    <ul>
+        @foreach (var item in order.Items)
+        {
+            <li>
+                <img src="@item.Template.ImageUrl" width="50" />
+                @item.Template.Title x @item.Quantity - @item.Price kr
+            </li>
+        }
+    </ul>
+}

@@ -99,5 +99,61 @@ namespace MallarEmelieMVC.Controllers
 
             return RedirectToAction("ViewCart");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> IncreaseQuantity(int cartItemById)
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            if(user == null)
+            {
+                TempData["Error"] = "Du måste logga in för att ändra i kundvagnen";
+                return RedirectToPage("/Account/Login", new { area = "Identity" });
+            }
+
+            var cartItemToIncrease = await _context.CartItems.FirstOrDefaultAsync(c => c.CartItemId == cartItemById && user.Id == c.UserId);
+            if(cartItemToIncrease == null)
+            {
+                TempData["Error"] = "Produkten kunde inte hittas";
+                return RedirectToAction("ViewCart");
+            }
+
+            cartItemToIncrease.Quantity++;
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Kundvagnen har uppdaterats";
+            return RedirectToAction("ViewCart");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DecreaseQuantity(int cartItemById)
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                TempData["Error"] = "Du måste logga in för att ändra i kundvagnen";
+                return RedirectToPage("/Account/Login", new { area = "Identity" });
+            }
+
+            var cartItemToDecrease = await _context.CartItems.FirstOrDefaultAsync(c => c.CartItemId == cartItemById && c.UserId == user.Id);
+            if(cartItemToDecrease == null)
+            {
+                TempData["Error"] = "Produkten kunde inte hittas";
+                return RedirectToAction("ViewCart");
+            }
+
+            if(cartItemToDecrease.Quantity <= 1)
+            {
+                TempData["Error"] = "Produktens antal går inte att göra mindre än 1";
+                return RedirectToAction("ViewCart");
+            }
+
+            cartItemToDecrease.Quantity--;
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Kundvagnen har uppdaterats";
+            return RedirectToAction("ViewCart");
+        }
     }
 }

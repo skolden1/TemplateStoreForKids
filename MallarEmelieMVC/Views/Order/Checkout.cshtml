@@ -1,0 +1,36 @@
+﻿@using System.Security.Claims
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">Slutför beställning</h2>
+
+    <form method="post" class="mx-auto w-100" style="max-width: 600px;">
+        <div class="mb-3">
+            <label for="Email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="Email" name="Email" value="@User.Identity.Name" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label for="MobileNr" class="form-label">Mobilnummer*</label>
+            <input type="text" class="form-control" id="MobileNr" name="MobileNr" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="StreetAddress" class="form-label">Gatuadress*</label>
+            <input type="text" class="form-control" id="StreetAddress" name="StreetAddress" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="PostalCode" class="form-label">Postnummer*</label>
+            <input type="text" class="form-control" id="PostalCode" name="PostalCode" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="City" class="form-label">Stad*</label>
+            <input type="text" class="form-control" id="City" name="City" required />
+        </div>
+
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary btn-lg">Slutför beställning</button>
+        </div>
+    </form>
+</div>
