@@ -33,10 +33,18 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Template" asp-action="ViewTemplate">Visa mallar</a>
                         </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="ViewOrders">Mina ordrar</a>
+                        </li>
+
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="CreateTemplate">Skapa mall</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="SearchOrder">Sök order</a>
                             </li>
                         }
                         

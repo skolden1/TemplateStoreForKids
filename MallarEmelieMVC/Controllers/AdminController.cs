@@ -146,5 +146,70 @@ namespace MallarEmelieMVC.Controllers
             TempData["Success"] = "Mallen raderades!";
             return RedirectToAction("ViewTemplate", "Template");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ViewOrder(int orderId)
+        {
+            var order = await _context.Orders
+                .Include(o => o.Items)
+                    .ThenInclude(oi => oi.Template)
+                .FirstOrDefaultAsync(o => o.OrderId == orderId);
+         
+            if(order == null)
+            {
+                TempData["Error"] = "Ingen order hittades med det Id:t";
+                return RedirectToAction("SearchOrder", "Admin");
+            }
+
+            return View(order);
+        }
+
+
+        //så admin kan söka upp alla orders genom orderid
+
+        [HttpGet]
+        public async Task<IActionResult> SearchOrder()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SearchOrder(int orderId)
+        {
+            var order = await _context.Orders
+                .Include(o => o.Items)
+                    .ThenInclude(oi => oi.Template)
+                    .FirstOrDefaultAsync(o => o.OrderId == orderId);
+
+            if(order == null)
+            {
+                TempData["Error"] = "Ingen order hittades med det Id:t";
+                return RedirectToAction("SearchOrder", "Admin");
+            }
+
+            return RedirectToAction("ViewOrder", new { orderId = order.OrderId });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditOrder(Order updateOrder)
+        {
+            var existingOrder = await _context.Orders.FirstOrDefaultAsync(o => o.OrderId == updateOrder.OrderId);
+            if(existingOrder == null)
+            {
+                TempData["Error"] = "Ordern kunde inte hittas.";
+                return RedirectToAction("SearchOrder");
+            }
+
+            existingOrder.Status = updateOrder.Status;
+            existingOrder.MobileNr = updateOrder.MobileNr;
+            existingOrder.StreetAddress = updateOrder.StreetAddress;
+            existingOrder.PostalCode = updateOrder.PostalCode;
+            existingOrder.City = updateOrder.City;
+
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Ordern har uppdaterats!";
+            return RedirectToAction("SearchOrder");
+        }
     }
 }

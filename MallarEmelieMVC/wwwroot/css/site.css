@@ -91,29 +91,54 @@ body {
     max-width: 600px;
     margin: 0 auto 50px auto;
     padding: 30px;
-    background-color: #f9f9f9;
+    background-color: #f0f8ff;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     font-family: Arial, sans-serif;
     line-height: 1.6;
 }
 
-    .order-card h4 {
-        margin-top: 20px;
-        margin-bottom: 10px;
-    }
+.ordr-btn{
+    cursor: default !important;
+    background-color: lightskyblue;
+    font-size: 14px;
+    color: black;
+    border: none;    
+}
 
-    .order-card ul {
-        list-style-type: disc;
-        padding-left: 20px;
-    }
 
-    .order-card .thank-you {
-        font-size: 1.2rem;
-        font-weight: bold;
-        margin-bottom: 15px;
-        color: #2c3e50;
-    }
+.o-ul {
+    padding: 0px !important;
+    margin: 0px;
+}
+
+.o-li {
+    list-style-type: none;
+    padding: 8px 0px;
+    border-top: 1px solid #007bff;
+}
+
+.order-total-price {
+    border-top: 1px solid #007bff;
+    padding-top: 12px;
+}
+
+.order-card h4 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.order-card ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.order-card .thank-you {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
 
 /* Responsive txt for produktinfo */
 @media (max-width: 996px) {

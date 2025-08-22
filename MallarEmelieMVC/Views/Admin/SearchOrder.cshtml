@@ -1,0 +1,23 @@
+﻿@*
+*@
+@{
+	ViewData["Title"] = "Sök order (Admin)";
+}
+
+
+@if (TempData["Error"] != null)
+{
+	<div class="alert alert-danger text-center">
+		@TempData["Error"]
+	</div>
+}
+
+<div class="text-center my-5">
+	<h2>Adminvy: Sök order</h2>
+	<p>Här kan du som administratör söka upp en order via dess ID och redigera information.</p>
+</div>
+<form asp-action="SearchOrder" asp method="post">
+	<label for="orderId">Order ID:</label>
+	<input type="search" name="orderId" required />
+	<button>Sök</button>
+</form>

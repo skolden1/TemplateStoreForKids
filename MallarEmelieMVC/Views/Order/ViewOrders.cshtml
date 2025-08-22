@@ -1,17 +1,30 @@
 ﻿@using MallarEmelieMVC.Data.Model
 @model List<Order>
 
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger text-center">
+        @TempData["Error"]
+    </div>
+}
+
+
+<h1 class="text-center my-5">Alla dina ordrar</h1>
+
 @foreach (var order in Model)
 {
-    <h3>Order #@order.OrderId - @order.OrderDate.ToShortDateString()</h3>
-    <p>Status: @order.Status</p>
-    <ul>
-        @foreach (var item in order.Items)
-        {
-            <li>
-                <img src="@item.Template.ImageUrl" width="50" />
-                @item.Template.Title x @item.Quantity - @item.Price kr
-            </li>
-        }
-    </ul>
+    <div class="order-card mb-4 p-3 border">
+        <h3>Order #@order.OrderId - @order.OrderDate.ToShortDateString()</h3>
+        <p>Status: <button class="ordr-btn">@order.Status</button></p>
+        <ul class="o-ul">
+            @foreach (var item in order.Items)
+            {
+                <li class="o-li">
+                    <img src="@item.Template.ImageUrl" width="65" />
+                    @item.Template.Title x @item.Quantity - @item.Price.ToString("C")
+                </li>
+            }
+        </ul>
+        <p class="order-total-price my-2"><strong>Totalt:</strong> @order.Items.Sum(i => i.Price * i.Quantity).ToString("C")</p>
+    </div>
 }

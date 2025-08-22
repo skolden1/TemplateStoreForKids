@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace MallarEmelieMVC.Controllers
 {
@@ -125,5 +126,7 @@ namespace MallarEmelieMVC.Controllers
 
             return RedirectToAction("Receipt", new { orderId = order.OrderId });
         }
+
+    
     }
 }

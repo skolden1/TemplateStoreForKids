@@ -9,19 +9,19 @@
     <p class="thank-you">Tack för din beställning!</p>
 
     <p><strong>Ordernummer:</strong> @Model.OrderId</p>
-    <p><strong>Totalt belopp:</strong> @Model.Items.Sum(i => i.Price * i.Quantity) kr</p>
+    <p><strong>Totalt belopp:</strong> @Model.Items.Sum(i => i.Price * i.Quantity).ToString("C")</p>
 
     <p>
         Din order är nu registrerad och väntar på betalning.
-        Vänligen swisha beloppet <strong>@Model.Items.Sum(i => i.Price * i.Quantity) kr</strong>
-        till <strong>073-5266141</strong> och ange <strong>ordernummer @Model.OrderId</strong> som swish kommentar.
+        Vänligen swisha beloppet <strong>@Model.Items.Sum(i => i.Price * i.Quantity).ToString("C")</strong>
+        till <strong>073-5266141</strong> och ange <strong>ordernummer "@Model.OrderId"</strong> som swish kommentar.
     </p>
 
     <h4>Beställda artiklar:</h4>
     <ul>
         @foreach (var item in Model.Items)
         {
-            <li>@item.Quantity x @item.Template.Title - @item.Price kr/st</li>
+            <li>@item.Quantity x @item.Template.Title - @item.Price.ToString("C")/st</li>
         }
     </ul>
 
