@@ -12,12 +12,25 @@
 	</div>
 }
 
-<div class="text-center my-5">
-	<h2>Adminvy: Sök order</h2>
-	<p>Här kan du som administratör söka upp en order via dess ID och redigera information.</p>
+<div class="container my-5">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold">Adminvy: Sök order</h2>
+        <p class="text-muted">
+            Här kan du som administratör söka upp en order via dess ID och redigera information.
+        </p>
+    </div>
+
+    <div class="card search-card shadow-lg mx-auto">
+        <div class="card-body p-4">
+            <form asp-action="SearchOrder" method="post" class="d-flex flex-column gap-3">
+                <div>
+                    <label for="orderId" class="form-label fw-semibold">Order ID</label>
+                    <input type="search" id="orderId" name="orderId" class="form-control" required placeholder="Ange order id" />
+                </div>
+                <button class="btn btn-primary w-100">
+                    Sök order
+                </button>
+            </form>
+        </div>
+    </div>
 </div>
-<form asp-action="SearchOrder" asp method="post">
-	<label for="orderId">Order ID:</label>
-	<input type="search" name="orderId" required />
-	<button>Sök</button>
-</form>

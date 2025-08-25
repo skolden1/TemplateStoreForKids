@@ -63,11 +63,12 @@ namespace MallarEmelieMVC.Controllers
                 .OrderByDescending(o => o.OrderDate)
                 .FirstOrDefaultAsync();
 
-            if(latestOrder == null)
+            if (latestOrder == null)
             {
                 TempData["Error"] = "Kunde inte hitta din order";
                 return RedirectToAction("ViewCart", "Cart");
             }
+
 
             return View(latestOrder);
         }
@@ -82,7 +83,7 @@ namespace MallarEmelieMVC.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Checkout(string MobileNr, string StreetAddress, string PostalCode, string City)
+        public async Task<IActionResult> Checkout(string firstName, string lastName, string MobileNr, string StreetAddress, string PostalCode, string City)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -105,9 +106,12 @@ namespace MallarEmelieMVC.Controllers
             var order = new Order
             {
                 UserId = user.Id,
+                Email = user.Email,
                 OrderDate = DateTime.UtcNow,
                 PaymentComment = "Swisha till 0735266141, ange orderID som kommentar",
                 Status = "Pending",
+                FirstName = firstName,
+                LastName = lastName,
                 MobileNr = MobileNr,
                 StreetAddress = StreetAddress,
                 PostalCode = PostalCode,

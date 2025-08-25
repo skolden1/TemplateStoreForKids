@@ -1,0 +1,76 @@
+﻿@model MallarEmelieMVC.Data.Model.Order
+@*
+*@
+@{
+	ViewData["Title"] = "Redigera order (Admin)";
+}
+
+@if (TempData["Success"] != null)
+{
+	<div class="alert alert-success text-center">
+		@TempData["Success"]
+	</div>
+}
+
+@if (TempData["Error"] != null)
+{
+	<div class="alert alert-danger text-center">
+		@TempData["Error"]
+	</div>
+}
+
+<h1 class="text-center my-5">Redigera order #@Model.OrderId</h1>
+
+<form asp-action="EditOrder" method="post">
+	<input type="hidden" value="@Model.OrderId" name="OrderId" />
+
+	<label for="FirstName"><strong>Förnamn</strong></label>
+	<input type="text" name="FirstName" id="FirstName" value="@Model.FirstName"/>
+
+	<label for="LastName"><strong>Efternamn</strong></label>
+	<input type="text" name="LastName" id="LastName" value="@Model.LastName" />
+
+	<label for="MobileNr"><strong>Mobil</strong></label>
+	<input type="tel" name="MobileNr" id="MobileNr" value="@Model.MobileNr" />
+
+	<label for="StreetAddress"><strong>Gatuadress</strong></label>
+	<input type="text" name="StreetAddress" id="StreetAddress" value="@Model.StreetAddress" />
+
+	<label for="PostalCode"><strong>Postnummer</strong></label>
+	<input type="text" name="PostalCode" id="PostalCode" value="@Model.PostalCode" />
+
+	<label for="City"><strong>Stad</strong></label>
+	<input type="text" name="City" id="City" value="@Model.City" />
+
+    <label for="Status"><strong>Status:</strong></label>
+    <select id="Status" name="Status">
+        @if (Model.Status == "Pending")
+        {
+            <option value="Pending" selected>Pending</option>
+        }
+        else
+        {
+            <option value="Pending">Pending</option>
+        }
+
+        @if (Model.Status == "Betald")
+        {
+            <option value="Betald" selected>Betald</option>
+        }
+        else
+        {
+            <option value="Betald">Betald</option>
+        }
+
+        @if (Model.Status == "Skickad")
+        {
+            <option value="Skickad" selected>Skickad</option>
+        }
+        else
+        {
+            <option value="Skickad">Skickad</option>
+        }
+    </select>
+	
+	<button class="btn btn-primary" type="submit">Spara ändringar</button>
+</form>

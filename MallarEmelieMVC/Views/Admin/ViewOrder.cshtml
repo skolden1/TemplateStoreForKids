@@ -1,7 +1,88 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+﻿@model MallarEmelieMVC.Data.Model.Order
+@*
 *@
 @{
 }
 
-<h1>Ordern hittades</h1>
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success text-center">
+        @TempData["Success"]
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger text-center">
+        @TempData["Error"]
+    </div>
+}
+
+<h1 class="order-title">Orderdetaljer</h1>
+
+@if (Model != null)
+{
+    <div class="order-info">
+        <h5>Order ID: @Model.OrderId</h5>
+        <p><strong>Email:</strong> @Model.Email</p>
+        <p><strong>Förnamn:</strong> @Model.FirstName</p>
+        <p><strong>Efternamn:</strong> @Model.LastName</p>
+        <p><strong>Mobil:</strong> @Model.MobileNr</p>
+        <p><strong>Adress:</strong> @Model.StreetAddress</p>
+        <p><strong>Stad:</strong> @Model.City</p>
+        <p><strong>Postnummer:</strong> @Model.PostalCode</p>
+        <p><strong>Orderdatum:</strong> @Model.OrderDate.ToString("yyyy-MM-dd")</p>
+        <form action="/Admin/UpdateOrderStatus" method="post">
+            <input type="hidden" name="orderId" value="@Model.OrderId" />
+            <label for="Status"><strong>Status:</strong></label>
+            <select id="Status" name="status">
+                @if (Model.Status == "Pending")
+                {
+                    <option value="Pending" selected>Pending</option>
+                }
+                else
+                {
+                    <option value="Pending">Pending</option>
+                }
+
+                @if (Model.Status == "Betald")
+                {
+                    <option value="Betald" selected>Betald</option>
+                }
+                else
+                {
+                    <option value="Betald">Betald</option>
+                }
+
+                @if (Model.Status == "Skickad")
+                {
+                    <option value="Skickad" selected>Skickad</option>
+                }
+                else
+                {
+                    <option value="Skickad">Skickad</option>
+                }
+            </select>
+            <button class="btn btn-primary btn-sm" type="submit">Uppdatera status</button>
+        </form>
+        
+        <a asp-action="EditOrder" asp-route-orderId="@Model.OrderId" class="btn btn-success my-3">Redigera order</a>
+       
+    </div>
+
+    <h4 class="order-items-title">Beställda artiklar</h4>
+    <ul class="order-items-list">
+        @foreach (var item in Model.Items)
+        {
+            <li class="order-item">
+                <img class="order-item-pic" src="@item.Template.ImageUrl" alt="@item.Template.Title" />
+                <div class="order-item-info">
+                    <span class="item-title">@item.Template.Title</span>
+                    <span class="item-quantity">@item.Quantity x @item.Price.ToString("C")/st</span>
+                </div>
+            </li>
+        }
+    </ul>
+
+    <p class="order-total"><strong>Totalt belopp:</strong> @Model.Items.Sum(i => i.Price * i.Quantity).ToString("C")</p>
+}

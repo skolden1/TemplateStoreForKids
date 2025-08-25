@@ -1,6 +1,8 @@
-﻿using MallarEmelieMVC.Data;
+﻿using MallarEmelieMVC.Areas.Identity.Models;
+using MallarEmelieMVC.Data;
 using MallarEmelieMVC.Data.Model;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -161,6 +163,7 @@ namespace MallarEmelieMVC.Controllers
                 return RedirectToAction("SearchOrder", "Admin");
             }
 
+
             return View(order);
         }
 
@@ -190,6 +193,19 @@ namespace MallarEmelieMVC.Controllers
             return RedirectToAction("ViewOrder", new { orderId = order.OrderId });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> EditOrder(int orderId)
+        {
+            var order = await _context.Orders.FirstOrDefaultAsync(o => o.OrderId == orderId);
+            if(order == null)
+            {
+                TempData["Error"] = "Ordern kunde inte hittas.";
+                return RedirectToAction("SearchOrder");
+            }
+
+            return View(order);
+        }
+
         [HttpPost]
         public async Task<IActionResult> EditOrder(Order updateOrder)
         {
@@ -199,17 +215,40 @@ namespace MallarEmelieMVC.Controllers
                 TempData["Error"] = "Ordern kunde inte hittas.";
                 return RedirectToAction("SearchOrder");
             }
-
+            //personupgftr
+            existingOrder.FirstName = updateOrder.FirstName;
+            existingOrder.LastName = updateOrder.LastName;
             existingOrder.Status = updateOrder.Status;
             existingOrder.MobileNr = updateOrder.MobileNr;
             existingOrder.StreetAddress = updateOrder.StreetAddress;
             existingOrder.PostalCode = updateOrder.PostalCode;
             existingOrder.City = updateOrder.City;
+            existingOrder.Status = updateOrder.Status;
 
             await _context.SaveChangesAsync();
 
             TempData["Success"] = "Ordern har uppdaterats!";
-            return RedirectToAction("SearchOrder");
+            //skickar med idt, för att kunna se medd på samma sida med updt värden
+            return RedirectToAction("EditOrder", new { orderId = updateOrder.OrderId });
+        }
+
+        //För o enkelt kunna ändra order status manuellt genom admin kontot
+        [HttpPost]
+        public async Task<IActionResult> UpdateOrderStatus(int orderId, string status)
+        {
+            var order = await _context.Orders.FirstOrDefaultAsync(o => o.OrderId == orderId);
+
+            if(order == null)
+            {
+                TempData["Error"] = "Ordern kunde inte hittas.";
+                return RedirectToAction("SearchOrder");
+            }
+
+            order.Status = status;
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Status uppdaterad!";
+            return RedirectToAction("ViewOrder", new { orderId });
         }
     }
 }
