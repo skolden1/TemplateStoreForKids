@@ -16,48 +16,49 @@
     <div class="alert alert-danger text-center">@TempData["Error"]</div>
 }
 
-<form class="text-form" asp-action="CreateTemplate" method="post" enctype="multipart/form-data">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="wrapper-createTemplate">
+    <form class="text-form" asp-action="CreateTemplate" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-    <div class="mb-3">
-        <label for="Title">Titel*</label>
-        <input asp-for="Title" class="form-control" />
-        <span asp-validation-for="Title" class="text-danger"></span>
-    </div>
+        <div class="mb-3">
+            <label for="Title">Titel*</label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
 
-    <div class="mb-3">
-        <label for="Description">Beskrivning*</label>
-        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
+        <div class="mb-3">
+            <label for="Description">Beskrivning*</label>
+            <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
 
-    <div class="mb-3">
-        <label for="Price">Pris*</label>
-        <input asp-for="Price" class="form-control" />
-        <span asp-validation-for="Price" class="text-danger"></span>
-    </div>
+        <div class="mb-3">
+            <label for="Price">Pris*</label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
 
-    <div class="mb-3">
-        <label class="form-label">Ladda upp bild</label>
-        <input type="file" name="ImageUpload" class="form-control" accept="image/*" required />
-    </div>
+        <div class="mb-3">
+            <label class="form-label">Ladda upp bild</label>
+            <input type="file" name="ImageUpload" class="form-control" accept="image/*" required />
+        </div>
 
-    <div class="mb-3">
-        <label for="CategoryId">Kategori</label>
-        <select asp-for="CategoryId" class="form-select">
-            <option value="0">-- Välj kategori --</option>
-            <option value="1">Matematik</option>
-            <option value="2">Språk</option>
-            <option value="3">Naturvetenskap</option>
-            <option value="4">Konst</option>
-            <option value="5">TAKK/AKK Kakor</option>
-        </select>
-        <span asp-validation-for="CategoryId" class="text-danger"></span>
-    </div>
+        <div class="mb-3">
+            <label for="CategoryId">Kategori</label>
+            <select asp-for="CategoryId" class="form-select">
+                <option value="0">-- Välj kategori --</option>
+                <option value="1">Matematik</option>
+                <option value="2">Språk</option>
+                <option value="3">Naturvetenskap</option>
+                <option value="4">Konst</option>
+                <option value="5">TAKK/AKK Kakor</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
 
-    <button type="submit" class="btn btn-primary">Skapa mall</button>
-</form>
-
+        <button type="submit" class="btn btn-primary">Skapa mall</button>
+    </form>
+</div>
 @* för att få validering (req) att visas om man ej fyllt i etc *@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

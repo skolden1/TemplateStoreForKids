@@ -21,17 +21,20 @@
 
 <h1 class="text-center my-5">Redigera order #@Model.OrderId</h1>
 
-<form asp-action="EditOrder" method="post">
+<form asp-action="EditOrder" method="post" class="edit-container">
 	<input type="hidden" value="@Model.OrderId" name="OrderId" />
 
-	<label for="FirstName"><strong>Förnamn</strong></label>
-	<input type="text" name="FirstName" id="FirstName" value="@Model.FirstName"/>
+	    <label for="FirstName"><strong>Förnamn</strong></label>
+	    <input type="text" name="FirstName" id="FirstName" value="@Model.FirstName"/>
 
-	<label for="LastName"><strong>Efternamn</strong></label>
-	<input type="text" name="LastName" id="LastName" value="@Model.LastName" />
+	    <label for="LastName"><strong>Efternamn</strong></label>
+	    <input type="text" name="LastName" id="LastName" value="@Model.LastName" />
+    
 
-	<label for="MobileNr"><strong>Mobil</strong></label>
-	<input type="tel" name="MobileNr" id="MobileNr" value="@Model.MobileNr" />
+    
+	    <label for="MobileNr"><strong>Mobil</strong></label>
+	    <input type="tel" name="MobileNr" id="MobileNr" value="@Model.MobileNr" />
+    
 
 	<label for="StreetAddress"><strong>Gatuadress</strong></label>
 	<input type="text" name="StreetAddress" id="StreetAddress" value="@Model.StreetAddress" />
@@ -72,5 +75,5 @@
         }
     </select>
 	
-	<button class="btn btn-primary" type="submit">Spara ändringar</button>
+	<button class="btn btn-primary btn-editOrder" type="submit">Spara ändringar</button>
 </form>
