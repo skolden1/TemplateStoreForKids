@@ -4,6 +4,8 @@ using MallarEmelieMVC.Data;
 using MallarEmelieMVC.Areas.Identity.Data;
 using MallarEmelieMVC.Areas.Identity.Models;
 using MallarEmelieMVC.Data.Model;
+using MallarEmelieMVC.Services;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,12 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(buil
 
 builder.Services.AddDbContext<IdentityUserContext>(options => options.UseSqlServer(connectionString));
 
+//Email service
+var email = builder.Configuration["EmailSettings:Email"];
+var password = builder.Configuration["EmailSettings:Password"];
+
+builder.Services.AddRazorTemplating();
+builder.Services.AddScoped(_ => new EmailService(email, password));
 
 // Add Identity services to pass two types of identity
 builder.Services.AddIdentity<IdentityUserTable, IdentityRole>(options =>

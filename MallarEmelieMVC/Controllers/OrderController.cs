@@ -1,10 +1,12 @@
 ﻿using MallarEmelieMVC.Areas.Identity.Models;
 using MallarEmelieMVC.Data;
 using MallarEmelieMVC.Data.Model;
+using MallarEmelieMVC.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Razor.Templating.Core;
 using System.Linq;
 
 namespace MallarEmelieMVC.Controllers
@@ -15,10 +17,12 @@ namespace MallarEmelieMVC.Controllers
     {
         private readonly UserManager<IdentityUserTable> _userManager;
         private readonly AppDbContext _context;
-        public OrderController(UserManager<IdentityUserTable> userManager, AppDbContext context)
+        private readonly EmailService _emailService;
+        public OrderController(UserManager<IdentityUserTable> userManager, AppDbContext context, EmailService emailService)
         {
             _userManager = userManager;
             _context = context;
+            _emailService = emailService;
         }
        
 
@@ -127,6 +131,10 @@ namespace MallarEmelieMVC.Controllers
             _context.Orders.Add(order);
             _context.CartItems.RemoveRange(cartItems);
             await _context.SaveChangesAsync();
+
+            //skicka kvittot till mail
+            var body = await RazorTemplateEngine.RenderAsync("/Views/sendMail/EmailSenderView.cshtml", order);
+            await _emailService.SendEmailAsync(user.Email, "Ditt kvitto", body);
 
             return RedirectToAction("Receipt", new { orderId = order.OrderId });
         }
