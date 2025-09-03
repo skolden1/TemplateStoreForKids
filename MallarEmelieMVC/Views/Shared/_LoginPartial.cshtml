@@ -3,7 +3,7 @@
 @inject SignInManager<IdentityUserTable> SignInManager
 @inject UserManager<IdentityUserTable> UserManager
 
-<ul class="navbar-nav">
+<ul class="navbar-nav navbar-login">
     @if (SignInManager.IsSignedIn(User))
     {
         var currentUser = await UserManager.GetUserAsync(User);

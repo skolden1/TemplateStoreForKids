@@ -17,7 +17,7 @@
     <header>
         <nav class="navbar navbar-expand navbar-toggleable-sm navbar-light navbar-custom box-shadow">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MallarByEmelie</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MallarAvEmelie</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="bi bi-list" style="font-size: 1.7rem; color: white;"></i>
@@ -74,12 +74,27 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="footer-socials">
-            <p>Hemsida skapad av <a href="https://www.linkedin.com/in/andreas-sj%C3%B6lander-12b661323/" target="_blank">Andreas</a></p>
-            <i class="fa-brands fa-github"></i>
+
+        <div class="footer-navBar">
+            <a asp-action="Index" asp-area="" asp-controller="Home">Hem</a>
+            <a asp-action="ViewTemplate" asp-area="" asp-controller="Template">Visa mallar</a>
+            <a asp-action="ViewOrders" asp-area="" asp-controller="Order">Visa ordrar</a>
         </div>
+
+        <div class="footer-profile">
+            <p><partial name="_LoginPartial" /></p>
+        </div>
+
+        <div class="footer-socials">
+            <p>
+                Hemsida skapad av <a href="https://www.linkedin.com/in/andreas-sj%C3%B6lander-12b661323/" target="_blank">Andreas</a>  <a href="https://github.com/skolden1" target="_blank">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+            </p>
+        </div>
+
         <div class="container">
-            &copy; 2025 - MallarByEmelie - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2025 - MallarAvEmelie - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

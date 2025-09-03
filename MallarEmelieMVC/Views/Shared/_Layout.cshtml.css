@@ -65,13 +65,31 @@ button.accept-policy {
 }
 
 .footer-socials{
+    display: flex;
+    justify-content: center;
+}
 
+.footer-socials a{
+    color: black;
 }
 
 .footer-socials i {
-    font-size: 25px;
+    font-size: 30px;
     cursor: pointer;
 }
+
+.footer-profile{
+    display: flex;
+    justify-content: center;
+}
+
+.footer-navBar {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+
 
 /* nav bar*/
 .navbar-collapse {
