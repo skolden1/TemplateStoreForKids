@@ -12,7 +12,7 @@
         var defaultAvatarUrl = Url.Content("~/images/ironman.png");
 
         <li class="nav-item d-flex align-items-center">
-            <a class="nav-link text-dark d-flex align-items-center" asp-area="Identity" asp-page="/Account/Manage/Index" title="Profil">
+            <a class="nav-link text-dark d-flex align-items-center identity-profile-text" asp-area="Identity" asp-page="/Account/Manage/Index" title="Profil">
                 <img src="@(string.IsNullOrEmpty(profilePicture) ? defaultAvatarUrl : profilePicture)"
                      alt="Profilbild"
                      style="width:32px; height:32px; border-radius:50%; object-fit:cover; margin-right:8px;" />
