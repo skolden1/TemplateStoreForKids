@@ -78,16 +78,16 @@ using (var scope = app.Services.CreateScope())
     
 
     var configuration = app.Services.GetRequiredService<IConfiguration>();
-    string adminEmail = configuration["AdminUser:Email"];
-    string adminPassword = configuration["AdminUser:Password"];
+    string adminEmail = configuration["AdminUser:Email"] ?? "skolden123@hotmail.com";
+    string adminPassword = configuration["AdminUser:Password"] ?? "AdminTest";   //just for testing
 
     // om admin roll ej finns skapa den
     if (!await roleManager.RoleExistsAsync("Admin"))
     {
         await roleManager.CreateAsync(new IdentityRole("Admin"));
     }
-
     
+
     var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
     if (adminUser == null)
