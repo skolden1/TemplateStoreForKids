@@ -75,8 +75,11 @@ using (var scope = app.Services.CreateScope())
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUserTable>>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-    string adminEmail = "skolden123@hotmail.com";
-    string adminPassword = "Admin123!"; 
+    
+
+    var configuration = app.Services.GetRequiredService<IConfiguration>();
+    string adminEmail = configuration["AdminUser:Email"];
+    string adminPassword = configuration["AdminUser:Password"];
 
     // om admin roll ej finns skapa den
     if (!await roleManager.RoleExistsAsync("Admin"))
