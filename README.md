@@ -8,7 +8,7 @@ This is a website under development for selling fun and colorful design template
 - User registration and login with ASP.NET Core Identity  
 - Profile management including profile picture upload  
 - Product display of kids’ design templates  
-- Shopping cart and order management (coming soon)  
+- Shopping cart and order management 
 - Responsive design for a great user experience on all devices  
 
 ## Technologies
